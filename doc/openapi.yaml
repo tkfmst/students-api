@@ -1,0 +1,112 @@
+openapi: "3.0.3"
+info:
+  version: "0.0.1"
+  title: "students"
+servers:
+  - url: "localhost:3000"
+
+paths:
+  /students:
+    get:
+      tags:
+      - "students"
+      summary: "Find students by facilitator_id"
+      description: "Returns students"
+      parameters:
+      - name: "facilitator_id"
+        in: "query"
+        description: "先生のID"
+        required: true
+        schema:
+          type: "integer"
+      - name: "page"
+        in: "query"
+        description: "表示するページ番号"
+        schema:
+          type: "integer"
+          default: 1
+      - name: "limit"
+        in: "query"
+        description: "1ページに表示する生徒数"
+        schema:
+          type: "integer"
+          default: 5
+        example: 1
+      - name: "sort"
+        in: "query"
+        description: "ソートキー<br>Studentのキーを指定"
+        schema:
+          type: "string"
+          default: "id"
+        examples: 
+          id: 
+            value: "id"
+          name:
+            value: "name" 
+          classroom.id:
+            value: "classroom.id" 
+          classroom.name:
+            value: "classroom.name" 
+      - name: "order"
+        in: "query"
+        description: "ソートの昇順(desc)・降順(asc)の選択"
+        schema:
+          type: "string"
+          enum:
+            - "desc"
+            - "asc"
+          default: "asc"
+      - name: "{key}_like"
+        in: "query"
+        description: "指定したStudentのキーによる部分一致検索<br>利用可能なキーはexamplesを参照"
+        schema:
+          type: object
+          maxProperties: 1
+        examples: 
+          name_like: 
+            value: {"name_like": "生徒"}
+          classroom.name_like:
+            value: {"classroom.name_like": "特進"}
+        style: form
+        explode: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentList"
+        "400":
+          description: "Bad Request"
+components:
+  schemas:
+    StudentList:
+      type: "object"
+      properties:
+        students:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Student"
+        total_count:
+          type: "integer"
+          example: 1
+    Student:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "生徒1"
+        classroom:
+          $ref: "#/components/schemas/Classroom"
+    Classroom:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "特進クラス"
