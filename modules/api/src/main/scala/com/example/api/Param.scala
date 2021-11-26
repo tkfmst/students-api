@@ -1,14 +1,13 @@
 package com.example.api
 
+import com.example.app.student.input.{LikeWordInput, OrderInput, SortInput}
 import eu.timepit.refined.types.string.NonEmptyString
 import cats.implicits._
 import com.example.types.FacilitatorId
 import org.http4s._, org.http4s.dsl.io._
 import eu.timepit.refined.api.RefType
 import eu.timepit.refined.types.numeric.PosInt
-import com.example.entity.studentBelongingToFacilitator.PageLimit.{LimitPerPage, PageNumber}
-import com.example.entity.studentBelongingToFacilitator.SortLogic.{SortKey, SortOrder}
-import com.example.entity.studentBelongingToFacilitator.PartialMatch
+import com.example.types.{LimitPerPage, PageNumber}
 
 object Param {
   implicit val facilitatorIdQueryParamDecoder: QueryParamDecoder[FacilitatorId] =
@@ -38,47 +37,47 @@ object Param {
           .leftMap(msg => ParseFailure(s"limitPerPageQueryParamDecoder: ${msg}", s"For input: `${i.toString}`"))
       )
 
-  implicit val sortKeyQueryParamDecoder: QueryParamDecoder[SortKey] =
+  implicit val sortInputQueryParamDecoder: QueryParamDecoder[SortInput] =
     QueryParamDecoder[String]
       .emap(s =>
-        SortKey
+        SortInput
           .fromString(s)
-          .leftMap(msg => ParseFailure(s"sortKeyQueryParamDecoder: ${msg}", s"For input: `${s}`"))
+          .leftMap(msg => ParseFailure(s"sortInputQueryParamDecoder: ${msg}", s"For input: `${s}`"))
       )
 
-  implicit val sortOrderQueryParamDecoder: QueryParamDecoder[SortOrder] =
+  implicit val orderInputQueryParamDecoder: QueryParamDecoder[OrderInput] =
     QueryParamDecoder[String]
       .emap(s =>
-        SortOrder
+        OrderInput
           .fromString(s)
-          .leftMap(msg => ParseFailure(s"sortOrderQueryParamDecoder: ${msg}", s"For input: `${s}`"))
+          .leftMap(msg => ParseFailure(s"orderInputQueryParamDecoder: ${msg}", s"For input: `${s}`"))
       )
 
-  implicit val partialMatchStudentNameQueryParamDecoder: QueryParamDecoder[PartialMatch.StudentName] =
+  implicit val likeWordInputStudentNameQueryParamDecoder: QueryParamDecoder[LikeWordInput.StudentName] =
     QueryParamDecoder[String]
       .emap(s =>
         RefType
           .applyRef[NonEmptyString](s)
-          .map(PartialMatch.StudentName(_))
-          .leftMap(msg => ParseFailure(s"partialMatchStudentNameQueryParamDecoder: ${msg}", s"For input: `${s}`"))
+          .map(LikeWordInput.studentName(_))
+          .leftMap(msg => ParseFailure(s"likeWordInputStudentNameQueryParamDecoder: ${msg}", s"For input: `${s}`"))
       )
 
-  implicit val partialMatchClassroomNameQueryParamDecoder: QueryParamDecoder[PartialMatch.ClassroomName] =
+  implicit val likeWordInputClassroomNameQueryParamDecoder: QueryParamDecoder[LikeWordInput.ClassroomName] =
     QueryParamDecoder[String]
       .emap(s =>
         RefType
           .applyRef[NonEmptyString](s)
-          .map(PartialMatch.ClassroomName(_))
-          .leftMap(msg => ParseFailure(s"partialMatchClassroomNameQueryParamDecoder: ${msg}", s"For input: `${s}`"))
+          .map(LikeWordInput.classroomName(_))
+          .leftMap(msg => ParseFailure(s"likeWordInputClassroomNameQueryParamDecoder: ${msg}", s"For input: `${s}`"))
       )
 
-  object FacilitatorIdParam extends ValidatingQueryParamDecoderMatcher[FacilitatorId]("facilitator_id")
-  object PageNumberParam    extends OptionalValidatingQueryParamDecoderMatcher[PageNumber]("page")
-  object LimitPerPageParam  extends OptionalValidatingQueryParamDecoderMatcher[LimitPerPage]("limit")
-  object SortKeyParam       extends OptionalValidatingQueryParamDecoderMatcher[SortKey]("sort")
-  object SortOrderParam     extends OptionalValidatingQueryParamDecoderMatcher[SortOrder]("order")
-  object PartialMatchStudentNameParam
-      extends OptionalValidatingQueryParamDecoderMatcher[PartialMatch.StudentName]("name_like")
-  object PartialMatchClassroomNameParam
-      extends OptionalValidatingQueryParamDecoderMatcher[PartialMatch.ClassroomName]("classroom.name_like")
+  object FacilitatorIdInputParam extends ValidatingQueryParamDecoderMatcher[FacilitatorId]("facilitator_id")
+  object PageNumberInputParam    extends OptionalValidatingQueryParamDecoderMatcher[PageNumber]("page")
+  object LimitPerPageInputParam  extends OptionalValidatingQueryParamDecoderMatcher[LimitPerPage]("limit")
+  object SortInputParam          extends OptionalValidatingQueryParamDecoderMatcher[SortInput]("sort")
+  object OrderInputParam         extends OptionalValidatingQueryParamDecoderMatcher[OrderInput]("order")
+  object LikeWordStudentNameInputParam
+      extends OptionalValidatingQueryParamDecoderMatcher[LikeWordInput.StudentName]("name_like")
+  object LikeWordClassroomNameInputParam
+      extends OptionalValidatingQueryParamDecoderMatcher[LikeWordInput.ClassroomName]("classroom.name_like")
 }

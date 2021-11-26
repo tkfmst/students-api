@@ -48,6 +48,7 @@ object Dependencies {
 
   val infraDependencies = Seq(
     doobie,
+    doobieRefined,
     doobieH2,
     doobieHikari,
     h2db,
@@ -74,9 +75,10 @@ object Libraries {
   lazy val circeParser  = "io.circe" %% "circe-parser"  % Versions.Circe
   lazy val circeRefined = "io.circe" %% "circe-refined" % Versions.Circe
 
-  lazy val doobie       = "org.tpolecat" %% "doobie-core"   % Versions.Doobie
-  lazy val doobieH2     = "org.tpolecat" %% "doobie-h2"     % Versions.Doobie
-  lazy val doobieHikari = "org.tpolecat" %% "doobie-hikari" % Versions.Doobie
+  lazy val doobie        = "org.tpolecat" %% "doobie-core"    % Versions.Doobie
+  lazy val doobieRefined = "org.tpolecat" %% "doobie-refined" % Versions.Doobie
+  lazy val doobieH2      = "org.tpolecat" %% "doobie-h2"      % Versions.Doobie
+  lazy val doobieHikari  = "org.tpolecat" %% "doobie-hikari"  % Versions.Doobie
 
   lazy val h2db = "com.h2database" % "h2" % Versions.H2DB
 

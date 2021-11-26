@@ -1,8 +1,9 @@
 package com.example.api
 
+import com.example.app.student.input.LikeWordInput
 import doobie.util.transactor.Transactor
-import com.example.app.usecase.ListByFacilitatorUsecaseInteractor
-import com.example.infra.h2.StudentBelongingToFacilitatorRepositoryOnH2
+import com.example.app.student.usecase.ListByFacilitatorUsecaseInteractor
+import com.example.infra.h2.{ClassroomRepositoryOnH2, StudentRepositoryOnH2}
 import com.example.interface.StudentController
 import cats.data.{Validated, ValidatedNel}
 import com.example.api.Param._
@@ -14,8 +15,7 @@ import cats.effect._
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.dsl.Http4sDsl
-import com.example.app.input.ListByFacilitatorInput
-import com.example.entity.studentBelongingToFacilitator.PartialMatch
+import com.example.app.student.input.ListByFacilitatorInput
 import eu.timepit.refined.auto._
 
 class Api[F[_]](studentController: StudentController[F])(implicit F: Async[F]) extends Http4sDsl[F] {
@@ -33,18 +33,18 @@ class Api[F[_]](studentController: StudentController[F])(implicit F: Async[F]) e
   def routes: HttpRoutes[F] =
     HttpRoutes.of[F] {
       case GET -> Root / "students"
-          :? FacilitatorIdParam(validatedFid)
-          +& PageNumberParam(validatedPage)
-          +& LimitPerPageParam(validatedLimit)
-          +& SortKeyParam(validatedSort)
-          +& SortOrderParam(validatedOrder)
-          +& PartialMatchStudentNameParam(validatedPartialMatchStudentName)
-          +& PartialMatchClassroomNameParam(validatedPartialMatchClassroomName) => {
+          :? FacilitatorIdInputParam(validatedFid)
+          +& PageNumberInputParam(validatedPage)
+          +& LimitPerPageInputParam(validatedLimit)
+          +& SortInputParam(validatedSort)
+          +& OrderInputParam(validatedOrder)
+          +& LikeWordStudentNameInputParam(validatedLikeWordtudentName)
+          +& LikeWordClassroomNameInputParam(validatedLikeWordClassroomName) => {
 
-        val validatedOptPartialMatch: ValidatedNel[ParseFailure, Option[PartialMatch]] =
-          PartialMatch
+        val validatedOptLikeWord: ValidatedNel[ParseFailure, Option[LikeWordInput]] =
+          LikeWordInput
             .select(
-              Seq(validatedPartialMatchStudentName, validatedPartialMatchClassroomName)
+              Seq(validatedLikeWordtudentName, validatedLikeWordClassroomName)
             )
             .moveOptionInside
 
@@ -54,10 +54,10 @@ class Api[F[_]](studentController: StudentController[F])(implicit F: Async[F]) e
           validatedLimit.moveOptionInside,
           validatedSort.moveOptionInside,
           validatedOrder.moveOptionInside,
-          validatedOptPartialMatch
+          validatedOptLikeWord
         )
-          .mapN((fid, optPage, optLimit, optSort, optOrder, optPartialMatch) => {
-            val input = ListByFacilitatorInput(fid, optPage, optLimit, optSort, optOrder, optPartialMatch)
+          .mapN((fid, optPage, optLimit, optSort, optOrder, optLikeWord) => {
+            val input = ListByFacilitatorInput(fid, optPage, optLimit, optSort, optOrder, optLikeWord)
             for {
               output <- studentController.listByFacilitator(input)
               res    <- Ok(output.asJson)
@@ -80,7 +80,8 @@ object Api {
   def apply[F[_]: Async](xa: Transactor[F]): Api[F] = new Api[F](
     StudentController(
       listByFacilitatorUsecase = ListByFacilitatorUsecaseInteractor(
-        studentBelongingToFacilitatorRepo = StudentBelongingToFacilitatorRepositoryOnH2(xa)
+        classroomRepo = ClassroomRepositoryOnH2(xa),
+        studentRepo = StudentRepositoryOnH2(xa)
       )
     )
   )
