@@ -27,7 +27,7 @@ object Server extends IOApp {
 
   def resource[F[_]: Async](xa: Transactor[F]): Resource[F, Server] = {
     BlazeServerBuilder[F]
-      .bindHttp(8080)
+      .bindHttp(8080, "0.0.0.0")
       .withHttpApp(api(xa))
       .resource
   }
