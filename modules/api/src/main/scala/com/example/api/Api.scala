@@ -32,6 +32,16 @@ class Api[F[_]](studentController: StudentController[F])(implicit F: Async[F]) e
 
   def routes: HttpRoutes[F] =
     HttpRoutes.of[F] {
+      /**
+       * GET /studens
+       *
+       * 教師ID(facilitator_id)を指定し教師の受け持つ生徒を返すAPIエンドポイント
+       *
+       * TODO このエンドポイントははREST APIとしてはfacilitatorsリソースに所属するべきかではないか?
+       *   - e.g. `/facilitators/{facilitator_id}/students` など
+       *
+       * TODO studentがfacilitator_idを持ってないのでリソースとしては少々不自然ではある
+       */
       case GET -> Root / "students"
           :? FacilitatorIdInputParam(validatedFid)
           +& PageNumberInputParam(validatedPage)
