@@ -1,7 +1,7 @@
 package com.example.app.student.input
 
-import com.example.types.{FacilitatorId, LimitPerPage, PageNumber}
 import com.example.entity.{ContainingWordFilter, Paging, Sort}
+import com.example.types.{FacilitatorId, LimitPerPage, PageNumber}
 
 final case class ListByFacilitatorInput(
     fid: FacilitatorId,

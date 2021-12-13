@@ -2,10 +2,10 @@ package com.example
 
 import eu.timepit.refined.api.RefType
 import eu.timepit.refined.auto._
-import eu.timepit.refined.types.string.NonEmptyString
 import eu.timepit.refined.types.numeric.PosInt
-import io.estatico.newtype.macros.newtype
+import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.{Decoder, Encoder}
+import io.estatico.newtype.macros.newtype
 
 package object types {
 

@@ -1,7 +1,7 @@
 package com.example.entity.student
 
-import com.example.entity.classroom.Classroom
 import com.example.entity.{ContainingWordFilter, Paging}
+import com.example.entity.classroom.Classroom
 import com.example.types.ListByFacilitatorCount
 
 abstract class StudentRepository[F[_]]() {

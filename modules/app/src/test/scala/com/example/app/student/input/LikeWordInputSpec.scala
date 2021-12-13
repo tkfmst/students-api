@@ -1,7 +1,7 @@
 package com.example.app.student.input
 
-import eu.timepit.refined.auto._
 import cats._
+import eu.timepit.refined.auto._
 
 class LikeWordInputSpec extends munit.FunSuite {
   test("`select` is Only one `LikeWordInput` should be selected.") {

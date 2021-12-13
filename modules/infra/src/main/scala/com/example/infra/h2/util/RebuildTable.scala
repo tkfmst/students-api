@@ -1,8 +1,8 @@
 package com.example.infra.h2.util
 
-import doobie.h2._
 import cats.effect._
 import doobie.ConnectionIO
+import doobie.h2._
 import doobie.implicits._
 
 /**

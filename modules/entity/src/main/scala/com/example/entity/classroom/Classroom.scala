@@ -1,7 +1,7 @@
 package com.example.entity.classroom
 
-import com.example.types.{ClassroomId, ClassroomName}
 import com.example.entity.ContainingWordFilter
+import com.example.types.{ClassroomId, ClassroomName}
 import io.circe.generic.JsonCodec
 import io.estatico.newtype.macros.newtype
 

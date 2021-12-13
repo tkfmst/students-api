@@ -1,13 +1,13 @@
 package com.example.api
 
-import com.example.app.student.input.{LikeWordInput, OrderInput, SortInput}
-import eu.timepit.refined.types.string.NonEmptyString
 import cats.implicits._
-import com.example.types.FacilitatorId
-import org.http4s._, org.http4s.dsl.io._
+import com.example.app.student.input.{LikeWordInput, OrderInput, SortInput}
+import com.example.types.{FacilitatorId, LimitPerPage, PageNumber}
 import eu.timepit.refined.api.RefType
 import eu.timepit.refined.types.numeric.PosInt
-import com.example.types.{LimitPerPage, PageNumber}
+import eu.timepit.refined.types.string.NonEmptyString
+import org.http4s._
+import org.http4s.dsl.io._
 
 object Param {
   implicit val facilitatorIdQueryParamDecoder: QueryParamDecoder[FacilitatorId] =

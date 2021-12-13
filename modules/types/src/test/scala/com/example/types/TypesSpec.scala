@@ -1,9 +1,9 @@
 package com.example.types
 
 import eu.timepit.refined.auto._
-import io.circe.syntax._
-import io.circe.parser._
 import io.circe.literal._
+import io.circe.parser._
+import io.circe.syntax._
 
 class TypesSpec extends munit.FunSuite {
   test("`StudentId` should support json encode/decode") {

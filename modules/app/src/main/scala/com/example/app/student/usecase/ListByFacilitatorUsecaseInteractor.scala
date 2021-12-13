@@ -2,12 +2,11 @@ package com.example.app.student.usecase
 
 import cats._
 import cats.implicits._
-import com.example.app.student.input.ListByFacilitatorInput
+import com.example.app.student.input.{ListByFacilitatorInput, ListByFacilitatorInputBoundary}
 import com.example.app.student.output.ListByFacilitatorOutput
-import com.example.entity.student.StudentRepository
 import com.example.entity.classroom.{Classroom, ClassroomRepository}
+import com.example.entity.student.StudentRepository
 import com.example.types.ClassroomId
-import com.example.app.student.input.ListByFacilitatorInputBoundary
 
 final case class ListByFacilitatorUsecaseInteractor[F[_]: FlatMap](
     classroomRepo: ClassroomRepository[F],

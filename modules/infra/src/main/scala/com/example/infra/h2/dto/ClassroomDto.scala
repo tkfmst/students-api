@@ -1,10 +1,10 @@
 package com.example.infra.h2.dto
 
+import com.example.entity.classroom.Classroom
+import com.example.types.{ClassroomId, ClassroomName}
+import eu.timepit.refined.api.Refined
 import eu.timepit.refined.types.numeric.PosInt
 import eu.timepit.refined.types.string.NonEmptyString
-import com.example.entity.classroom.Classroom
-import eu.timepit.refined.api.Refined
-import com.example.types.{ClassroomId, ClassroomName}
 
 final case class ClassroomDto(
     cid: Int,

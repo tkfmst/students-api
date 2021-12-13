@@ -1,8 +1,8 @@
 package com.example.entity.classroom
 
-import eu.timepit.refined.auto._
-import com.example.types.{ClassroomId, ClassroomName}
 import com.example.entity.ContainingWordFilter
+import com.example.types.{ClassroomId, ClassroomName}
+import eu.timepit.refined.auto._
 
 class ClassroomSpec extends munit.FunSuite {
   test(

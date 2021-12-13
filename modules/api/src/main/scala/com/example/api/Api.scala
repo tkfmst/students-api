@@ -1,22 +1,21 @@
 package com.example.api
 
-import com.example.app.student.input.LikeWordInput
-import doobie.util.transactor.Transactor
+import cats.data.{Validated, ValidatedNel}
+import cats.effect._
+import cats.implicits._
+import com.example.api.Param._
+import com.example.app.student.input.{LikeWordInput, ListByFacilitatorInput}
 import com.example.app.student.usecase.ListByFacilitatorUsecaseInteractor
 import com.example.infra.h2.{ClassroomRepositoryOnH2, StudentRepositoryOnH2}
 import com.example.interface.StudentController
-import cats.data.{Validated, ValidatedNel}
-import com.example.api.Param._
-import org.slf4j.LoggerFactory
 import com.typesafe.scalalogging.Logger
-import cats.implicits._
-import org.http4s.circe._
-import cats.effect._
+import doobie.util.transactor.Transactor
+import eu.timepit.refined.auto._
 import io.circe.syntax._
 import org.http4s._
+import org.http4s.circe._
 import org.http4s.dsl.Http4sDsl
-import com.example.app.student.input.ListByFacilitatorInput
-import eu.timepit.refined.auto._
+import org.slf4j.LoggerFactory
 
 class Api[F[_]](studentController: StudentController[F])(implicit F: Async[F]) extends Http4sDsl[F] {
   val logger: Logger = Logger(LoggerFactory.getLogger("name"))

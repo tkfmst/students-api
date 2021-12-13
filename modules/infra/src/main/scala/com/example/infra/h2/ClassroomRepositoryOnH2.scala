@@ -1,12 +1,12 @@
 package com.example.infra.h2
 
-import com.example.infra.h2.dto.ClassroomDto
-import doobie.util.transactor.Transactor
 import cats.effect._
-import doobie.implicits._
 import com.example.entity.classroom.{Classroom, ClassroomRepository}
-import eu.timepit.refined.auto._
+import com.example.infra.h2.dto.ClassroomDto
 import com.example.types.FacilitatorId
+import doobie.implicits._
+import doobie.util.transactor.Transactor
+import eu.timepit.refined.auto._
 
 final case class ClassroomRepositoryOnH2[F[_]: MonadCancelThrow](xa: Transactor[F]) extends ClassroomRepository[F] {
   def getByAssignedFacilitator(fid: FacilitatorId): F[List[Classroom]] = {

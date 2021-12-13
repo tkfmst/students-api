@@ -1,8 +1,8 @@
 package com.example.app.student.output
 
+import com.example.entity.classroom.Classroom
 import com.example.entity.student.Student
 import com.example.types.{ClassroomId, ListByFacilitatorCount, StudentId, StudentName}
-import com.example.entity.classroom.Classroom
 import io.circe.generic.JsonCodec
 
 @JsonCodec final case class ListByFacilitatorOutput(

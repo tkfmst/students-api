@@ -1,15 +1,15 @@
 package com.example.infra.h2
 
-import com.example.infra.h2.dto.StudentDto
-import doobie.util.transactor.Transactor
-import doobie.util.fragment.Fragment
 import cats.effect._
 import cats.implicits._
-import doobie.implicits._
 import com.example.entity.{ContainingWordFilter, Paging, Sort}
-import com.example.entity.student.{Student, StudentRepository}
 import com.example.entity.classroom.Classroom
+import com.example.entity.student.{Student, StudentRepository}
+import com.example.infra.h2.dto.StudentDto
 import com.example.types.ListByFacilitatorCount
+import doobie.implicits._
+import doobie.util.fragment.Fragment
+import doobie.util.transactor.Transactor
 import eu.timepit.refined.auto._
 
 final case class StudentRepositoryOnH2[F[_]: MonadCancelThrow](xa: Transactor[F]) extends StudentRepository[F] {

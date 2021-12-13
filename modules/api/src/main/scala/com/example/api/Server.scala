@@ -1,14 +1,13 @@
 package com.example.api
 
-import org.http4s.implicits._
 import cats.effect._
+import com.example.infra.h2.Conn
+import com.example.infra.h2.util.DummyData
+import doobie.util.transactor.Transactor
 import org.http4s.HttpApp
 import org.http4s.blaze.server.BlazeServerBuilder
-import org.http4s.server.Router
-import org.http4s.server.Server
-import com.example.infra.h2.util.DummyData
-import com.example.infra.h2.Conn
-import doobie.util.transactor.Transactor
+import org.http4s.implicits._
+import org.http4s.server.{Router, Server}
 
 object Server extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = {

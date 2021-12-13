@@ -1,7 +1,7 @@
 package com.example.app.student.input
 
-import eu.timepit.refined.auto._
 import com.example.types.{FacilitatorId, LimitPerPage, PageNumber}
+import eu.timepit.refined.auto._
 
 class ListByFacilitatorInputSpec extends munit.FunSuite {
   test("`ListByFacilitatorInput` should use the default value if `None` args are given at creation time.") {
