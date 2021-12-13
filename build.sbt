@@ -66,11 +66,6 @@ lazy val api = project
 lazy val commonSettings = Seq(
   scalaVersion := Versions.Scala,
 
-  // Scalafix
-  ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value),
-  semanticdbEnabled := true, // enable scalafix SemanticDB
-  semanticdbVersion := scalafixSemanticdb.revision,
-
   scalacOptions ++= Seq(
     /**
       * @see https://docs.scala-lang.org/overviews/compiler-options/index.html

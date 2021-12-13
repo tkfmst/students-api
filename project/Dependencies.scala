@@ -1,7 +1,8 @@
 import sbt._
 
 object Versions {
-  val Scala = "2.13.7"
+  val Scala       = "2.13.7"
+  val ScalaBinary = "2.13"
 
   val Cats           = "2.6.1"
   val CatsEffect     = "3.2.9"
